@@ -2,13 +2,14 @@
 
 import {
   motion,
-  useReducedMotion,
+  useMotionValue,
   useScroll,
   useSpring,
   useTransform,
   type MotionValue,
 } from "motion/react";
 import { useRef } from "react";
+import { usePrefersReducedMotion } from "@/lib/hooks/useMediaQuery";
 import { process } from "@/content/process";
 
 const { steps } = process;
@@ -38,10 +39,11 @@ function StepNode({ index, progress }: { index: number; progress: MotionValue<nu
 /** Four steps joined by a line that draws itself as you scroll. */
 export function ProcessTimeline() {
   const ref = useRef<HTMLOListElement>(null);
-  const reduced = useReducedMotion();
+  const reduced = usePrefersReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.8", "end 0.55"] });
   const smooth = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.4 });
-  const progress = useTransform(smooth, (v) => (reduced ? 1 : v));
+  const complete = useMotionValue(1);
+  const progress = reduced ? complete : smooth;
 
   return (
     <ol ref={ref} className="relative mt-16 grid gap-10 md:mt-20 md:grid-cols-4 md:gap-6">

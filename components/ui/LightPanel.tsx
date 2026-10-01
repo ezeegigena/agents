@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, type ReactNode } from "react";
+import { usePrefersReducedMotion } from "@/lib/hooks/useMediaQuery";
 import { cn } from "@/lib/cn";
 
 /**
@@ -24,7 +25,7 @@ export function LightPanel({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const Component = as === "div" ? motion.div : motion.section;
-  const reduced = useReducedMotion();
+  const reduced = usePrefersReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start 0.35"] });
   const scale = useTransform(scrollYProgress, [0, 1], [0.94, 1]);
 

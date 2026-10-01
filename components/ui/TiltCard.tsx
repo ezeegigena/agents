@@ -4,13 +4,12 @@ import {
   motion,
   useMotionTemplate,
   useMotionValue,
-  useReducedMotion,
   useSpring,
   useTransform,
 } from "motion/react";
 import type { CSSProperties, PointerEvent, ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { useCanHover } from "@/lib/hooks/useMediaQuery";
+import { useCanHover, usePrefersReducedMotion } from "@/lib/hooks/useMediaQuery";
 
 type TiltCardProps = {
   children: ReactNode;
@@ -34,7 +33,7 @@ export function TiltCard({
   style,
 }: TiltCardProps) {
   const canHover = useCanHover();
-  const reduced = useReducedMotion();
+  const reduced = usePrefersReducedMotion();
   const enabled = canHover && !reduced;
 
   const px = useMotionValue(0.5);

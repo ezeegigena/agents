@@ -2,12 +2,12 @@
 
 import {
   motion,
-  useReducedMotion,
   useScroll,
   useTransform,
   type MotionValue,
 } from "motion/react";
 import { useRef } from "react";
+import { usePrefersReducedMotion } from "@/lib/hooks/useMediaQuery";
 
 function Word({
   children,
@@ -29,7 +29,7 @@ function Word({
 /** Statement whose words light up one by one as it scrolls through view. */
 export function ScrollStatement({ text, id }: { text: string; id: string }) {
   const ref = useRef<HTMLHeadingElement>(null);
-  const reduced = useReducedMotion();
+  const reduced = usePrefersReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.85", "end 0.5"] });
   const words = text.split(" ");
 

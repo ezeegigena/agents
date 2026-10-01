@@ -1,5 +1,6 @@
-import { gsap } from "@/lib/gsap";
+import { statementLinks } from "@/content/demo";
 import { formatNumber, formatUsd } from "@/lib/format";
+import { gsap } from "@/lib/gsap";
 
 /**
  * GSAP choreography for the 3-statement demo. Elements are found through
@@ -286,7 +287,7 @@ export function buildDesktopTimeline(root: HTMLElement, onPhase: OnPhase): Timel
   feedRows.forEach((r, i) => buildFeedRow(tl, r, 0.1 + i * 0.13));
   buildSummary(tl, root.querySelector("[data-demo-feed] [data-feed-summary]"), 0.1 + feedRows.length * 0.13);
 
-  ["ni-cfs", "cash-bs", "ni-re"].forEach((id) => primeLink(root, id));
+  statementLinks.forEach((link) => primeLink(root, link.id));
   primeRows(all(root, "[data-statement] [data-row]"));
 
   // Income statement

@@ -42,7 +42,7 @@ export function DemoStage({ className }: { className?: string }) {
   const gridRef = useRef<HTMLDivElement>(null);
   const isDesktop = useMediaQuery("(min-width: 1024px)");
   const reduced = usePrefersReducedMotion();
-  const inView = useInViewport(stageRef, "0px 0px -20% 0px");
+  const inView = useInViewport(stageRef, "0px 0px -30% 0px");
 
   const month = demoMonths[monthIndex];
   const statements = demoModel[monthIndex];

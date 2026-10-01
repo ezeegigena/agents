@@ -246,7 +246,7 @@ export const demoMonths: DemoMonth[] = [
 export type StatementId = "is" | "bs" | "cfs";
 /** "is.netIncome", "bs.cash", … — identifies one statement line. */
 export type RowRef = `${StatementId}.${string}`;
-export type RowKind = "line" | "subtotal" | "total";
+type RowKind = "line" | "subtotal" | "total";
 
 export type StatementRow<K extends string> = {
   key: K;
@@ -259,7 +259,7 @@ export type StatementRow<K extends string> = {
   margin?: boolean;
 };
 
-export type StatementGroup<K extends string> = {
+type StatementGroup<K extends string> = {
   heading?: string;
   rows: StatementRow<K>[];
 };
@@ -278,7 +278,7 @@ export type StatementLayout<K extends string> = {
   groups: StatementGroup<K>[];
 };
 
-export type BalanceSheetKey = keyof (BalanceSheet & BalanceSheetTotals);
+type BalanceSheetKey = keyof (BalanceSheet & BalanceSheetTotals);
 
 const incomeStatement: StatementLayout<keyof IncomeStatement> = {
   id: "is",
