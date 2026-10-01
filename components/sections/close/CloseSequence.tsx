@@ -1,22 +1,39 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { cn } from "@/lib/cn";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { CloseChecklist } from "./CloseChecklist";
 import { CloseScoreboard } from "./CloseScoreboard";
-import { CloseTimeline, FILL_EMPTY, FILL_FULL } from "./CloseTimeline";
+import { CloseTimeline } from "./CloseTimeline";
+import { FILL_EMPTY, FILL_FULL } from "./CloseTrack";
 import { AI_CLOSE_END, TIMELINE_END, laneFraction, sequenceEase } from "./geometry";
-import { closeContent } from "@/content/close";
 
-/** Must match the Tailwind `lg:motion-safe:[@media(min-height:720px)]` classes below. */
+/** Must match the `lg:motion-safe:[@media(min-height:720px)]` classes below. */
 const PINNED_QUERY =
   "(min-width: 1024px) and (min-height: 720px) and (prefers-reduced-motion: no-preference)";
 const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
 /** Seconds the in-view (unpinned) version takes to play. */
 const PLAY_DURATION = 6;
 
-const days = closeContent.timeline.days;
 const ease = sequenceEase(AI_CLOSE_END, TIMELINE_END);
+
+/** Desktop + motion: a tall scroll track with a sticky, viewport-high stage. */
+const pinnedTrack = cn(
+  "mt-12 md:mt-16",
+  "lg:motion-safe:[@media(min-height:720px)]:mt-0",
+  "lg:motion-safe:[@media(min-height:720px)]:h-[280vh]",
+);
+const pinnedStage = cn(
+  "lg:motion-safe:[@media(min-height:720px)]:sticky",
+  "lg:motion-safe:[@media(min-height:720px)]:top-0",
+  "lg:motion-safe:[@media(min-height:720px)]:flex",
+  "lg:motion-safe:[@media(min-height:720px)]:h-screen",
+  "lg:motion-safe:[@media(min-height:720px)]:flex-col",
+  "lg:motion-safe:[@media(min-height:720px)]:justify-center",
+  "lg:motion-safe:[@media(min-height:720px)]:pt-[calc(var(--nav-height)+0.25rem)]",
+  "lg:motion-safe:[@media(min-height:720px)]:pb-4",
+);
 
 /**
  * The close race. Desktop: the stage sticks for ~180vh while scroll scrubs a
@@ -54,8 +71,8 @@ export function CloseSequence() {
         });
         tl.fromTo(
           cursor,
-          { xPercent: laneFraction(0, days) * 100 },
-          { xPercent: laneFraction(TIMELINE_END, days) * 100, duration: TIMELINE_END },
+          { xPercent: laneFraction(0) * 100 },
+          { xPercent: laneFraction(TIMELINE_END) * 100, duration: TIMELINE_END },
           0,
         );
 
@@ -100,11 +117,8 @@ export function CloseSequence() {
   }, []);
 
   return (
-    <div ref={rootRef} className="relative lg:motion-safe:[@media(min-height:720px)]:h-[280vh]">
-      <div
-        ref={stageRef}
-        className="lg:motion-safe:[@media(min-height:720px)]:sticky lg:motion-safe:[@media(min-height:720px)]:top-0 lg:motion-safe:[@media(min-height:720px)]:flex lg:motion-safe:[@media(min-height:720px)]:h-screen lg:motion-safe:[@media(min-height:720px)]:flex-col lg:motion-safe:[@media(min-height:720px)]:justify-center lg:motion-safe:[@media(min-height:720px)]:pt-[calc(var(--nav-height)+0.25rem)] lg:motion-safe:[@media(min-height:720px)]:pb-4"
-      >
+    <div ref={rootRef} className={cn("relative", pinnedTrack)}>
+      <div ref={stageRef} className={pinnedStage}>
         <div className="container-page grid gap-4 lg:grid-cols-[minmax(0,1fr)_18rem] lg:grid-rows-[auto_1fr] xl:grid-cols-[minmax(0,1fr)_21rem]">
           <div className="lg:col-start-2 lg:row-start-1">
             <CloseScoreboard day={day} />

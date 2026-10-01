@@ -39,7 +39,7 @@ function colorFor(bar: Bar) {
 export function CashWaterfall() {
   const view = useShowOnView();
   const [ref, width] = useElementWidth<HTMLDivElement>(560);
-  const height = width < 440 ? 236 : 272;
+  const height = width < 440 ? 268 : 272;
   const m = { top: 22, right: 6, bottom: 40, left: 46 };
   const plotW = width - m.left - m.right;
   const plotH = height - m.top - m.bottom;

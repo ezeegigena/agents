@@ -6,20 +6,28 @@ export const TIMELINE_END = Math.max(...closeDays);
 /** The fastest (AI-assisted) track's close day. */
 export const AI_CLOSE_END = Math.min(...closeDays);
 
-/** Columns on the lane: one "ongoing" column before day 1, then the days. */
-export const laneColumns = (days: number) => days + 1;
+/** Lane columns: one "ongoing" column before day 1, then the days. */
+export const LANE_COLUMNS = closeContent.timeline.days + 1;
 
-/** Horizontal position (0–1) of a timeline instant (0 = start of day 1). */
-export function laneFraction(t: number, days: number) {
-  return (t + 1) / laneColumns(days);
-}
+/** Horizontal position (0–1) of a timeline instant (−1 = ongoing column, 0 = start of day 1). */
+export const laneFraction = (t: number) => (t + 1) / LANE_COLUMNS;
+
+/** CSS left offset of an instant within the lane. */
+export const lanePct = (t: number) => `${laneFraction(t) * 100}%`;
+
+/** CSS width of the lane span between two instants. */
+export const laneSpan = (from: number, to: number) => `${((to - from) / LANE_COLUMNS) * 100}%`;
+
+/** Lane position in a row that also holds the label column (`--label`). */
+export const laneLeft = (t: number) =>
+  `calc(var(--label) + (100% - var(--label)) * ${laneFraction(t)})`;
 
 /** The 1-based day shown on a counter at timeline position `t`. */
 export function dayAt(t: number, closesOn: number) {
   return Math.min(closesOn, Math.max(1, Math.ceil(t)));
 }
 
-/** Screen-reader description of when a task runs ("Day 1 to day 4"). */
+/** Screen-reader description of when a task runs ("Day 1 to 4"). */
 export function taskSpan(task: CloseTask, dayLabel: string) {
   const first = Math.floor(task.start) + 1;
   const last = Math.ceil(task.end);

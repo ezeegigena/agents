@@ -31,7 +31,7 @@ export function PnlChart() {
   const summaryId = useId();
 
   const narrow = width < 440;
-  const height = narrow ? 190 : 248;
+  const height = narrow ? 232 : 248;
   const m = { top: 12, right: narrow ? 50 : 58, bottom: 24, left: 42 };
   const plotW = width - m.left - m.right;
   const plotH = height - m.top - m.bottom;
@@ -253,7 +253,7 @@ function Tooltip({ index, x, top, flip }: { index: number; x: number; top: numbe
       <dl className="mt-1.5 space-y-1">
         {rows.map((row) => (
           <div key={row.label} className="flex items-center justify-between gap-4">
-            <dt className="flex items-center gap-1.5 text-[11px] text-fg-muted">
+            <dt className="flex items-center gap-1.5 text-[11px] whitespace-nowrap text-fg-muted">
               {row.color ? (
                 <span aria-hidden className="h-0.5 w-3 rounded-full" style={{ backgroundColor: row.color }} />
               ) : (

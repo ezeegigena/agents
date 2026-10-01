@@ -19,7 +19,7 @@ export type CloseTask = {
   continuous?: boolean;
 };
 
-type CloseTrackId = "traditional" | "ai";
+export type CloseTrackId = "traditional" | "ai";
 
 export type CloseTrack = {
   id: CloseTrackId;

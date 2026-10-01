@@ -3,6 +3,7 @@ import { Check } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { closeContent, type CloseTrack } from "@/content/close";
 import { dayAt } from "./geometry";
+import { trackSwatch } from "./trackStyles";
 
 const { tracks, scoreboard, timeline, disclaimer } = closeContent;
 
@@ -41,10 +42,7 @@ function CounterRow({ track, day }: { track: CloseTrack; day: number }) {
         <div className="min-w-0">
           <p className="flex items-center gap-2 text-sm font-medium text-fg">
             <span
-              className={cn(
-                "h-2 w-4 shrink-0 rounded-full",
-                isAi ? "bg-brand-gradient" : "bg-[rgb(255_92_122/0.7)]",
-              )}
+              className={cn("h-2 w-4 shrink-0 rounded-full", trackSwatch[track.id])}
             />
             {track.label}
           </p>

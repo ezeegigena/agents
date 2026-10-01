@@ -39,9 +39,7 @@ export function Close() {
         />
       </div>
 
-      <div className="relative mt-12 md:mt-16">
-        <CloseSequence />
-      </div>
+      <CloseSequence />
 
       <CloseOutcomes />
     </section>

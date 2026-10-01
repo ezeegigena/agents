@@ -8,7 +8,7 @@ const { outcomes, ctaNote } = closeContent;
 /** Three qualitative outcomes + a secondary booking CTA. */
 export function CloseOutcomes() {
   return (
-    <div className="container-page mt-14 md:mt-20">
+    <div className="container-page mt-14 md:mt-20 lg:mt-12">
       <Stagger as="ul" className="grid gap-px overflow-hidden rounded-3xl border border-line bg-line md:grid-cols-3">
         {outcomes.map(({ icon: Icon, title, body }) => (
           <StaggerItem as="li" key={title} className="relative bg-ink-950/90 p-6 md:p-7">
