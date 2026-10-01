@@ -85,6 +85,9 @@ const dso = [46, 45, 47, 44, 44, 43, 43, 42, 42, 41, 42, 38];
 const last = <T,>(values: T[]) => values[values.length - 1];
 const prev = <T,>(values: T[]) => values[values.length - 2];
 
+/** Fictional company for the reporting mock (a larger business than the demo’s). */
+const company = "Juniper & Vale Co.";
+
 export const reportingContent = {
   index: "05",
   eyebrow: "Automated reporting",
@@ -92,7 +95,7 @@ export const reportingContent = {
   lead: "Your AI analysts build the P&L, cash flow, budget vs actual and board pack straight from your closed books — then deliver them to email or Slack, daily, weekly or monthly. No chasing, no copy-paste.",
 
   window: {
-    title: "Reports · Harbor & Pine Co.",
+    title: `Reports · ${company}`,
     sampleLabel: "Fictional company · sample data",
     sidebarLabel: "Reports",
     generatedLabel: "Auto-generated",
@@ -284,7 +287,7 @@ export const reportingContent = {
   },
 
   board: {
-    cover: { kicker: "Harbor & Pine Co.", title: "Q3 2026 Board Pack", footer: "Prepared by yourfinancedone" },
+    cover: { kicker: company, title: "Q3 2026 Board Pack", footer: "Prepared by yourfinancedone" },
     pages: ["Cover", "P&L & margins", "Cash flow", "KPI dashboard"],
     contentsLabel: "Contents",
     contents: [

@@ -17,9 +17,11 @@ function PlaceholderTag() {
 
 export function Testimonials() {
   return (
-    <section id="results" aria-labelledby="results-title" className="relative overflow-hidden py-24 md:py-36">
-      <Glow color="#9d6bff" size={620} opacity={0.18} className="top-0 -right-40" />
-      <Glow color="#1fe0b5" size={520} opacity={0.12} className="bottom-0 -left-40" />
+    <section id="results" aria-labelledby="results-title" className="relative isolate overflow-hidden py-24 md:py-36">
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 mask-fade-y">
+        <Glow color="#9d6bff" size={620} opacity={0.18} className="top-0 -right-40" />
+        <Glow color="#1fe0b5" size={520} opacity={0.12} className="bottom-0 -left-40" />
+      </div>
       <div className="container-page relative">
         <SectionHeading
           id="results-title"

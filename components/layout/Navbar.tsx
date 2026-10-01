@@ -29,16 +29,18 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Highlight the nav link for the section currently in the middle of the viewport.
+  // Highlight the nav link for the section currently in the middle of the
+  // viewport (none while a section without a nav link is there).
   useEffect(() => {
     if (!isHome) return;
-    const sections = siteConfig.nav
-      .map((item) => document.querySelector<HTMLElement>(item.href))
-      .filter((el): el is HTMLElement => el !== null);
+    const navHashes = new Set<string>(siteConfig.nav.map((item) => item.href));
+    const sections = document.querySelectorAll<HTMLElement>("main section[id]");
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) setActive(`#${entry.target.id}`);
+          if (!entry.isIntersecting) continue;
+          const hash = `#${entry.target.id}`;
+          setActive(navHashes.has(hash) ? hash : null);
         }
       },
       { rootMargin: "-45% 0px -50% 0px" },

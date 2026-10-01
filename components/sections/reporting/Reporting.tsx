@@ -14,15 +14,13 @@ export function Reporting() {
     <section
       id="reporting"
       aria-labelledby="reporting-title"
-      className="relative overflow-clip py-24 md:py-36"
+      className="relative isolate overflow-clip py-24 md:py-36"
     >
-      <span
-        aria-hidden
-        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-line-strong to-transparent"
-      />
-      <Glow color="#1fe0b5" className="-top-40 -left-40" size={760} opacity={0.2} />
-      <Glow color="#1fe0b5" className="top-1/2 right-[-12%]" size={720} opacity={0.16} />
-      <Glow color="#4c7dff" className="bottom-[-10%] left-1/4" size={560} opacity={0.14} />
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 mask-fade-y">
+        <Glow color="#1fe0b5" className="top-0 -left-40" size={760} opacity={0.2} />
+        <Glow color="#1fe0b5" className="top-1/2 right-[-12%]" size={720} opacity={0.16} />
+        <Glow color="#4c7dff" className="bottom-[-10%] left-1/4" size={560} opacity={0.14} />
+      </div>
 
       <div className="container-page relative">
         <SectionHeading

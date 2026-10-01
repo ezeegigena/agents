@@ -13,7 +13,7 @@ export function Agents() {
     <section
       id="agents"
       aria-labelledby="agents-title"
-      className="relative overflow-hidden bg-ink-950 py-24 md:py-36"
+      className="relative isolate overflow-hidden bg-ink-950 py-24 md:py-36"
     >
       <Backdrop />
       <div className="container-page relative">
@@ -43,9 +43,9 @@ const accent = (id: AgentId) => agentsById[id].accent;
 /** Calm multi-color glow field in the agents' accent colors. Decorative. */
 function Backdrop() {
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-0">
+    <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 mask-fade-y">
       <div className="bg-grid absolute inset-x-0 top-0 h-[42rem] [mask-image:radial-gradient(60%_70%_at_50%_0%,#000,transparent)] opacity-60" />
-      <Glow color={accent("bookkeeper")} size={620} opacity={0.12} className="-top-40 -left-48" />
+      <Glow color={accent("bookkeeper")} size={620} opacity={0.12} className="top-0 -left-48" />
       <Glow
         color={accent("controller")}
         size={760}

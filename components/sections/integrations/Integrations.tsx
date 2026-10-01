@@ -35,8 +35,10 @@ export function Integrations() {
   const allTools = [...first, ...second];
 
   return (
-    <section id="integrations" aria-labelledby="integrations-title" className="relative overflow-hidden py-24 md:py-36">
-      <Glow color="#4c7dff" size={700} opacity={0.18} className="top-1/3 left-1/2 -translate-x-1/2" drift={false} />
+    <section id="integrations" aria-labelledby="integrations-title" className="relative isolate overflow-hidden py-24 md:py-36">
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 mask-fade-y">
+        <Glow color="#4c7dff" size={700} opacity={0.18} className="top-1/3 left-1/2 -translate-x-1/2" drift={false} />
+      </div>
       <div className="container-page">
         <SectionHeading
           id="integrations-title"

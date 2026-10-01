@@ -82,7 +82,7 @@ export function Footer() {
 
       <p
         aria-hidden
-        className="pointer-events-none relative -mb-[0.22em] text-center font-display text-[clamp(4rem,17.5vw,16rem)] leading-none font-bold tracking-[-0.06em] whitespace-nowrap select-none"
+        className="pointer-events-none relative -mb-[0.22em] text-center font-display text-[clamp(2.75rem,12.6vw,12rem)] leading-none font-bold tracking-[-0.06em] whitespace-nowrap select-none"
       >
         <span className="bg-gradient-to-b from-white/[0.09] to-transparent bg-clip-text text-transparent">
           {siteConfig.name}

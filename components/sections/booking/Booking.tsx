@@ -11,8 +11,8 @@ import { PreQualificationForm } from "./PreQualificationForm";
 
 export function Booking() {
   return (
-    <section id="book" aria-labelledby="book-title" className="relative overflow-hidden py-24 md:py-36">
-      <div aria-hidden className="absolute inset-0 -z-10">
+    <section id="book" aria-labelledby="book-title" className="relative isolate overflow-hidden py-24 md:py-36">
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 mask-fade-y">
         <Glow color="#9d6bff" size={900} opacity={0.28} className="top-[10%] left-[45%]" />
         <Glow color="#4c7dff" size={700} opacity={0.22} className="-top-40 -left-40" />
         <Glow color="#1fe0b5" size={600} opacity={0.14} className="right-[-10%] bottom-[-20%]" />
