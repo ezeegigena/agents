@@ -82,8 +82,8 @@ export function Navbar() {
           className={cn(
             "relative mx-auto flex items-center justify-between gap-4 transition-all duration-700 ease-out-expo",
             scrolled
-              ? "glass-strong h-14 max-w-[1180px] rounded-full pr-2 pl-4 md:pl-5"
-              : "h-[var(--nav-height)] max-w-[1240px] border border-transparent px-5 md:px-8",
+              ? "glass-strong h-14 max-w-[1180px] rounded-full pr-2 pl-3.5 md:pl-5"
+              : "h-[var(--nav-height)] max-w-[1240px] border border-transparent px-4 sm:px-5 md:px-8",
           )}
         >
           <Link
@@ -130,7 +130,7 @@ export function Navbar() {
               href={hrefFor(siteConfig.bookingAnchor)}
               size="sm"
               arrow
-              className="h-10 px-4 md:px-5"
+              className="h-10 px-3.5 sm:px-4 md:px-5 max-sm:[&>svg]:hidden"
             >
               {siteConfig.cta.short}
             </Button>

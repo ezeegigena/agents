@@ -36,9 +36,9 @@ export function Logo({ className }: { className?: string }) {
   const name = siteConfig.name;
   const splitAt = name.endsWith("done") ? name.length - 4 : name.length;
   return (
-    <span className={cn("inline-flex items-center gap-2.5", className)}>
+    <span className={cn("inline-flex items-center gap-2 sm:gap-2.5", className)}>
       <LogoMark />
-      <span className="font-display text-[1.15rem] font-semibold tracking-[-0.04em] text-fg">
+      <span className="font-display text-[1.05rem] font-semibold tracking-[-0.04em] text-fg sm:text-[1.15rem]">
         {name.slice(0, splitAt)}
         <span className="text-gradient">{name.slice(splitAt)}</span>
       </span>
