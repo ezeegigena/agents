@@ -231,7 +231,8 @@ export const agents: Agent[] = [
     name: "AI Fractional CFO",
     short: "Fractional CFO",
     role: "Strategy & board reporting",
-    description: "Board-ready insight on demand: runway, scenarios and the story behind the numbers.",
+    description:
+      "Board-ready insight on demand: runway, scenarios and the story behind the numbers.",
     accent: "#9D6BFF",
     accentTo: "#1FE0B5",
     icon: Crown,
@@ -268,7 +269,44 @@ export function agentAccentBg(agent: Agent) {
 export const agentsSection = {
   eyebrow: "Your AI finance team",
   index: "02",
-  title: "Meet the team that never misses a close.",
+  /** Rendered as `title` + gradient `titleHighlight`. */
+  title: "Meet the team that",
+  titleHighlight: "never misses a close.",
   lead: "Eight specialized AI agents, each trained for a real finance role. Deploy one or the whole department — they work together, hand off work and escalate to your people when judgment is needed.",
   viewLabels: { team: "Team", org: "Org chart" },
+  viewToggleLabel: "Choose how to view the team",
+  hint: "Select an agent to see its full job description",
+  card: {
+    tag: "Agent",
+    open: "View profile",
+    previewLabel: "Top tasks",
+  },
+  dialog: {
+    close: "Close",
+    status: "Online 24/7",
+    tasksTitle: "What it handles",
+    handoffsTitle: "Hands off to",
+    receivesTitle: "Receives from",
+    reportsToTitle: "Reports to",
+    /** Shown for the agent at the top of the org chart. */
+    reportsToTop: "You & your leadership team",
+    activityTitle: "Sample activity",
+    activityNote: "Illustrative",
+    activityIdle: "Watching for new data",
+    cta: "Deploy this agent — book a call",
+  },
+  org: {
+    title: "How work flows through your AI finance team",
+    legend: {
+      tree: "Reports to · hands off work",
+      cross: "Cross-team handoff",
+    },
+    crossTitle: "Cross-team handoffs",
+    /** Screen-reader prefix before an agent's handoffs. */
+    handoffPrefix: "Hands off:",
+  },
+  cta: {
+    line: "Start with one agent — or deploy the whole department.",
+    sub: "Every agent escalates to your people when judgment is needed.",
+  },
 };
