@@ -41,7 +41,7 @@ function ChecklistRow({ item, done }: { item: CloseChecklistItem; done: boolean 
   const accent = agent?.accent ?? "#f5f7ff";
 
   return (
-    <li className="flex items-center gap-3 border-b border-white/[0.05] py-[7px] last:border-b-0 sm:[&:nth-last-child(2)]:border-b-0 lg:[&:nth-last-child(2)]:border-b">
+    <li className="flex items-center gap-3 border-b border-white/[0.05] py-[7px] lg:py-1.5 xl:py-[7px] last:border-b-0 sm:[&:nth-last-child(2)]:border-b-0 lg:[&:nth-last-child(2)]:border-b">
       <span
         aria-hidden
         className={cn(
@@ -60,7 +60,7 @@ function ChecklistRow({ item, done }: { item: CloseChecklistItem; done: boolean 
       </span>
       <p
         className={cn(
-          "min-w-0 flex-1 text-[13px] leading-snug transition-colors duration-300",
+          "min-w-0 flex-1 text-[13px] leading-snug transition-colors duration-300 lg:text-[12.5px] xl:text-[13px]",
           done ? "text-fg" : "text-fg-muted",
         )}
       >

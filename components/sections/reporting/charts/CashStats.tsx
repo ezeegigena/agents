@@ -33,7 +33,7 @@ export function CashStats() {
           custom={5 + i}
           className="min-w-0 rounded-xl border border-line bg-white/[0.025] px-3 py-2.5"
         >
-          <dt className="truncate text-[11px] text-fg-muted">{stat.label}</dt>
+          <dt className="text-[11px] leading-tight text-fg-muted">{stat.label}</dt>
           <dd className="mt-0.5 font-mono text-[15px] font-medium whitespace-nowrap text-fg @md:text-base">
             <CountUp value={stat.value} format={formatterFor(stat)} duration={1.3} />
             {stat.unit && <span className="ml-1 text-xs text-fg-muted">{stat.unit}</span>}

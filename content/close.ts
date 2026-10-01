@@ -19,7 +19,7 @@ export type CloseTask = {
   continuous?: boolean;
 };
 
-export type CloseTrackId = "traditional" | "ai";
+type CloseTrackId = "traditional" | "ai";
 
 export type CloseTrack = {
   id: CloseTrackId;
@@ -38,7 +38,7 @@ export type CloseChecklistItem = {
   owner: AgentId | "you";
 };
 
-export type CloseOutcome = {
+type CloseOutcome = {
   icon: LucideIcon;
   title: string;
   body: string;
@@ -56,7 +56,6 @@ export const closeContent = {
     /** Number of day columns on the timeline. */
     days: 15,
     dayLabel: "Day",
-    ongoingLabel: "Ongoing",
     cursorLabel: "Day",
   },
 
@@ -110,17 +109,16 @@ export const closeContent = {
 
   checklist: {
     title: "Close checklist",
-    doneLabel: "done",
     youLabel: "Your team",
     items: [
-      { label: "Bank & card accounts reconciled", doneAt: 0.5, owner: "bookkeeper" },
+      { label: "Bank & cards reconciled", doneAt: 0.5, owner: "bookkeeper" },
       { label: "AP/AR cutoff confirmed", doneAt: 1, owner: "ap-ar" },
       { label: "Accruals & prepaids booked", doneAt: 1.5, owner: "controller" },
-      { label: "Balance sheet accounts reconciled", doneAt: 1.75, owner: "controller" },
-      { label: "Variances flagged & explained", doneAt: 2, owner: "fpa" },
+      { label: "Balance sheet reconciled", doneAt: 1.75, owner: "controller" },
+      { label: "Variances explained", doneAt: 2, owner: "fpa" },
       { label: "Reviewed & signed off", doneAt: 2.25, owner: "you" },
-      { label: "Financial statements generated", doneAt: 2.75, owner: "controller" },
-      { label: "Management report delivered", doneAt: 3, owner: "fpa" },
+      { label: "Financial statements drafted", doneAt: 2.75, owner: "controller" },
+      { label: "Management report sent", doneAt: 3, owner: "fpa" },
     ] satisfies CloseChecklistItem[],
   },
 

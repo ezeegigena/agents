@@ -9,7 +9,13 @@ const { kpi } = reportingContent;
 export function KpiGrid() {
   const view = useShowOnView();
   return (
-    <motion.div key={view.key} {...view.props} className="grid grid-cols-2 gap-2.5 @lg:grid-cols-3">
+    <motion.div
+      key={view.key}
+      {...view.props}
+      role="group"
+      aria-label={kpi.caption}
+      className="grid grid-cols-2 gap-2.5 @lg:grid-cols-3"
+    >
       {kpi.tiles.map((tile, i) => (
         <StatTile key={tile.label} kpi={tile} comparison={kpi.comparison} index={i} trend />
       ))}

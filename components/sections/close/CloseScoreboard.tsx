@@ -31,7 +31,7 @@ function CounterRow({ track, day }: { track: CloseTrack; day: number }) {
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-2xl border p-3.5 transition-colors duration-500",
+        "relative overflow-hidden rounded-2xl border p-3.5 transition-colors duration-500 lg:p-3 xl:p-3.5",
         isAi && closed
           ? "border-success/30 bg-success/[0.06]"
           : "border-line bg-ink-900/60",

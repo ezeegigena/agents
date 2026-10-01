@@ -9,10 +9,10 @@ const { board, kpi } = reportingContent;
 
 /** Fan positions for the four page thumbnails (left → right). */
 const FAN = [
-  { x: "-62%", y: 14, rotate: -13 },
-  { x: "-21%", y: 2, rotate: -4.5 },
-  { x: "21%", y: 2, rotate: 4.5 },
-  { x: "62%", y: 14, rotate: 13 },
+  { x: "-54%", y: 12, rotate: -11 },
+  { x: "-18%", y: 2, rotate: -3.5 },
+  { x: "18%", y: 2, rotate: 3.5 },
+  { x: "54%", y: 12, rotate: 11 },
 ];
 
 const page: Variants = {
@@ -49,8 +49,18 @@ export function BoardPack() {
       </div>
 
       <div>
-        <p className="eyebrow text-fg-muted">{board.contentsLabel}</p>
-        <ol className="mt-3 divide-y divide-white/[0.05]">
+        <div className="flex items-center justify-between gap-3">
+          <p className="eyebrow text-fg-muted">{board.contentsLabel}</p>
+          <motion.span
+            variants={pop}
+            custom={8}
+            className="inline-flex shrink-0 items-center gap-1 rounded-full border border-success/30 bg-success/10 px-2 py-0.5 text-[11px] font-medium whitespace-nowrap text-success"
+          >
+            <Check aria-hidden className="size-3" strokeWidth={3} />
+            {board.ready}
+          </motion.span>
+        </div>
+        <ol className="mt-2.5 divide-y divide-white/[0.05]">
           {board.contents.map((item, i) => (
             <motion.li
               key={item.title}
@@ -70,18 +80,14 @@ export function BoardPack() {
             </motion.li>
           ))}
         </ol>
-        <motion.div
+        <motion.p
           variants={rise}
           custom={9}
-          className="mt-3 flex items-center gap-3 rounded-xl border border-line bg-white/[0.025] px-3 py-2.5"
+          className="mt-3 flex items-start gap-2 border-t border-line pt-3 text-xs leading-snug text-fg-muted"
         >
-          <FileText aria-hidden className="size-4 shrink-0 text-fg-muted" />
-          <span className="min-w-0 flex-1 truncate text-xs text-fg-muted">{board.status}</span>
-          <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-success/30 bg-success/10 px-2 py-0.5 text-[11px] font-medium whitespace-nowrap text-success">
-            <Check aria-hidden className="size-3" strokeWidth={3} />
-            {board.ready}
-          </span>
-        </motion.div>
+          <FileText aria-hidden className="size-3.5 shrink-0 translate-y-px" />
+          {board.status}
+        </motion.p>
       </div>
     </motion.div>
   );
