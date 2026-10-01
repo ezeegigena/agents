@@ -1,7 +1,11 @@
 import type { CSSProperties } from "react";
 import { cn } from "@/lib/cn";
 
-/** Soft, slowly drifting color blob for section backgrounds. Decorative. */
+/**
+ * Soft, slowly drifting color blob for section backgrounds. Decorative.
+ * Softness comes from a multi-stop radial gradient rather than a CSS blur
+ * filter, which is very expensive to rasterize at this size.
+ */
 export function Glow({
   color,
   className,
@@ -19,8 +23,8 @@ export function Glow({
     <div
       aria-hidden
       className={cn(
-        "pointer-events-none absolute rounded-full blur-[90px]",
-        drift && "animate-drift",
+        "pointer-events-none absolute rounded-full",
+        drift && "md:animate-drift",
         className,
       )}
       style={
@@ -28,7 +32,7 @@ export function Glow({
           width: size,
           height: size,
           opacity,
-          background: `radial-gradient(circle at center, ${color}, transparent 68%)`,
+          background: `radial-gradient(circle at center, ${color} 0%, color-mix(in oklab, ${color} 55%, transparent) 22%, color-mix(in oklab, ${color} 22%, transparent) 45%, transparent 70%)`,
         } as CSSProperties
       }
     />

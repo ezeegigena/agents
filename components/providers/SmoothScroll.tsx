@@ -7,30 +7,37 @@ import { registerLenis } from "@/lib/scroll";
 
 /**
  * Lenis smooth scrolling driven by the GSAP ticker so ScrollTrigger and
- * Lenis share one animation frame. Disabled for prefers-reduced-motion.
+ * Lenis share one animation frame. Started once the browser is idle (keeps
+ * it off the critical path) and disabled for prefers-reduced-motion.
  */
 export function SmoothScroll() {
   useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (reduced.matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const lenis = new Lenis({
-      lerp: 0.1,
-      wheelMultiplier: 1,
-      autoRaf: false,
-      anchors: { offset: -72, duration: 1.4 },
-    });
-    registerLenis(lenis);
+    let lenis: Lenis | null = null;
+    const tick = (time: number) => lenis?.raf(time * 1000);
 
-    lenis.on("scroll", ScrollTrigger.update);
-    const tick = (time: number) => lenis.raf(time * 1000);
-    gsap.ticker.add(tick);
-    gsap.ticker.lagSmoothing(0);
+    const start = () => {
+      lenis = new Lenis({
+        lerp: 0.1,
+        wheelMultiplier: 1,
+        autoRaf: false,
+      });
+      registerLenis(lenis);
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add(tick);
+      gsap.ticker.lagSmoothing(0);
+    };
+
+    const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 200));
+    const cancelIdle = window.cancelIdleCallback ?? window.clearTimeout;
+    const id = idle(start, { timeout: 1200 });
 
     return () => {
+      cancelIdle(id);
       gsap.ticker.remove(tick);
       registerLenis(null);
-      lenis.destroy();
+      lenis?.destroy();
     };
   }, []);
 

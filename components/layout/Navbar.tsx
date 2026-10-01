@@ -18,6 +18,9 @@ export function Navbar() {
   const [active, setActive] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const firstMenuLinkRef = useRef<HTMLAnchorElement>(null);
+  /** Return focus to the menu button only when the menu is dismissed (not on navigation). */
+  const restoreFocusRef = useRef(true);
 
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 200, damping: 40, mass: 0.4 });
@@ -52,22 +55,32 @@ export function Navbar() {
   useEffect(() => {
     if (!open) return;
     const menuButton = menuButtonRef.current;
+    restoreFocusRef.current = true;
     setScrollLocked(true);
+    const frame = requestAnimationFrame(() => firstMenuLinkRef.current?.focus());
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
     window.addEventListener("keydown", onKey);
     return () => {
+      cancelAnimationFrame(frame);
       setScrollLocked(false);
       window.removeEventListener("keydown", onKey);
-      menuButton?.focus();
+      if (restoreFocusRef.current) menuButton?.focus();
     };
   }, [open]);
 
   const hrefFor = (hash: string) => (isHome ? hash : `/${hash}`);
 
-  function onNavClick(e: React.MouseEvent<HTMLAnchorElement>, hash: string) {
+  /** Close the menu and release the scroll lock so in-page navigation can scroll. */
+  function closeMenuForNavigation() {
+    restoreFocusRef.current = false;
+    setScrollLocked(false);
     setOpen(false);
+  }
+
+  function onNavClick(e: React.MouseEvent<HTMLAnchorElement>, hash: string) {
+    if (open) closeMenuForNavigation();
     if (isHome && scrollToHash(hash)) e.preventDefault();
   }
 
@@ -185,7 +198,7 @@ export function Navbar() {
                     <a
                       href={hrefFor(item.href)}
                       onClick={(e) => onNavClick(e, item.href)}
-                      autoFocus={i === 0}
+                      ref={i === 0 ? firstMenuLinkRef : undefined}
                       className="flex items-baseline gap-4 py-2.5 font-display text-4xl font-semibold tracking-[-0.04em] text-fg"
                     >
                       <span className="eyebrow text-fg-subtle">0{i + 1}</span>
@@ -204,7 +217,7 @@ export function Navbar() {
                   size="lg"
                   arrow
                   className="w-full"
-                  onClick={() => setOpen(false)}
+                  onClick={closeMenuForNavigation}
                 >
                   {siteConfig.cta.primary}
                 </Button>

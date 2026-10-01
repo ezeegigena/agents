@@ -13,27 +13,45 @@ const FinanceBrainScene = dynamic(() => import("@/components/three/FinanceBrainS
   ssr: false,
 });
 
-type Mode = "pending" | "webgl" | "fallback";
+type Mode = "pending" | "webgl" | "fallback" | "none";
 
-let cachedMode: Mode | null = null;
+const DESKTOP = "(min-width: 1024px)";
+let webglCapable: boolean | null = null;
 
-/** WebGL only where it will run smoothly; everything else gets the CSS orbit. */
-function detectMode(): Mode {
-  if (cachedMode) return cachedMode;
+/** Detects (once) whether the device can run the WebGL scene smoothly (GPU-backed WebGL2). */
+function canRunWebgl() {
+  if (webglCapable !== null) return webglCapable;
   const nav = navigator as Navigator & { connection?: { saveData?: boolean } };
-  const desktop = window.matchMedia("(min-width: 1024px)").matches;
   const capable = (nav.hardwareConcurrency ?? 4) >= 4 && !nav.connection?.saveData;
-  let webgl = false;
+  let hardwareGl = false;
   try {
-    webgl = !!document.createElement("canvas").getContext("webgl2");
+    const gl = document.createElement("canvas").getContext("webgl2");
+    const info = gl?.getExtension("WEBGL_debug_renderer_info");
+    const renderer = info ? String(gl!.getParameter(info.UNMASKED_RENDERER_WEBGL)) : "";
+    // Software rasterizers (no GPU) would make the scene stutter and block the main thread.
+    hardwareGl = !!gl && !/swiftshader|llvmpipe|softpipe|software|basic render/i.test(renderer);
+    gl?.getExtension("WEBGL_lose_context")?.loseContext();
   } catch {
-    webgl = false;
+    hardwareGl = false;
   }
-  cachedMode = desktop && capable && webgl ? "webgl" : "fallback";
-  return cachedMode;
+  webglCapable = capable && hardwareGl;
+  return webglCapable;
 }
 
-const noopSubscribe = () => () => {};
+/**
+ * WebGL on capable desktops, the CSS orbit on other desktops. Below lg the
+ * hero renders its own CSS orbit, so this renders nothing.
+ */
+function getMode(): Mode {
+  if (!window.matchMedia(DESKTOP).matches) return "none";
+  return canRunWebgl() ? "webgl" : "fallback";
+}
+
+function subscribe(onChange: () => void) {
+  const mql = window.matchMedia(DESKTOP);
+  mql.addEventListener("change", onChange);
+  return () => mql.removeEventListener("change", onChange);
+}
 
 /** Desktop hero visual: CSS poster first, then the WebGL scene once idle. */
 export function HeroVisual() {
@@ -42,7 +60,7 @@ export function HeroVisual() {
   const pointer = useRef({ x: 0, y: 0 });
   const inView = useInViewport(containerRef, "100px");
   const reduced = usePrefersReducedMotion();
-  const mode = useSyncExternalStore<Mode>(noopSubscribe, detectMode, () => "pending");
+  const mode = useSyncExternalStore<Mode>(subscribe, getMode, () => "pending");
   const [mounted, setMounted] = useState(false);
   const [ready, setReady] = useState(false);
 
@@ -64,6 +82,7 @@ export function HeroVisual() {
     return () => window.removeEventListener("pointermove", onMove);
   }, []);
 
+  if (mode === "none") return null;
   if (mode === "fallback") return <OrbitFallback className="mx-auto max-w-[560px]" />;
 
   return (

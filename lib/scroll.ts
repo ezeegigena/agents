@@ -14,7 +14,14 @@ export function scrollToHash(hash: string) {
   if (!target) return false;
 
   if (lenis) {
-    lenis.scrollTo(target, { offset: -72, duration: 1.4 });
+    // Resync first: native scrolls (keyboard, find-in-page…) can leave Lenis'
+    // internal position stale, which would skew the destination.
+    if (Math.abs(lenis.animatedScroll - window.scrollY) > 1) {
+      lenis.scrollTo(window.scrollY, { immediate: true });
+    }
+    // Same landing spot as native anchors: honor `scroll-padding-top` (navbar).
+    const padding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+    lenis.scrollTo(target.getBoundingClientRect().top + window.scrollY - padding, { duration: 1.4 });
   } else {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     target.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });

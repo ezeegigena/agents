@@ -18,7 +18,7 @@
   /* Text on dark */
   --color-fg: #f5f7ff;
   --color-fg-muted: #a8b0d0;
-  --color-fg-subtle: #6e7699;
+  --color-fg-subtle: #7a82a6;
 
   /* Light sections */
   --color-paper: #f5f6fa;
@@ -80,8 +80,8 @@
     100% { transform: scale(2.6); opacity: 0; }
   }
   @keyframes word-rise {
-    from { transform: translate3d(0, 105%, 0) rotate(4deg); }
-    to { transform: translate3d(0, 0, 0) rotate(0); }
+    from { opacity: 0.001; transform: translate3d(0, 0.32em, 0); filter: blur(10px); }
+    to { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); }
   }
   @keyframes fade-up {
     from { opacity: 0; transform: translate3d(0, 16px, 0); filter: blur(6px); }
@@ -157,9 +157,6 @@
     text-wrap: balance;
   }
 
-  p {
-    text-wrap: pretty;
-  }
 }
 
 /* ==========================================================================

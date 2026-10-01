@@ -25,6 +25,8 @@ const mono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
   display: "swap",
+  // Only used for small labels and figures: don't compete with the hero for bandwidth.
+  preload: false,
 });
 
 export const metadata: Metadata = {

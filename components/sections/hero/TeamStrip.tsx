@@ -6,7 +6,7 @@ import { Marquee } from "@/components/ui/Marquee";
 /** Bottom-of-hero marquee introducing the AI team. */
 export function TeamStrip() {
   return (
-    <div className="relative z-10 border-t border-line bg-ink-950/40 backdrop-blur-sm">
+    <div className="relative z-10 border-t border-line bg-ink-950/60">
       <div className="container-page flex flex-col gap-4 py-5 md:flex-row md:items-center md:gap-8">
         <p className="eyebrow shrink-0 text-fg-subtle">{hero.teamStripLabel}</p>
         <Marquee duration={45} className="min-w-0 flex-1">

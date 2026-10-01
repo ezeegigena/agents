@@ -1,10 +1,11 @@
 import type { CSSProperties } from "react";
 
-const STAGGER = 0.07;
+const STAGGER = 0.06;
 
 /**
- * Word-by-word masked rise, driven by CSS so it starts at first paint
- * (no JS needed — keeps the headline fast as the LCP element).
+ * Word-by-word rise + de-blur, driven by CSS so it starts at first paint
+ * (no JS needed). No clipping mask: the words are "painted" from the first
+ * frame, which keeps the headline fast as the LCP element.
  */
 export function AnimatedHeadline({
   plain,
@@ -19,13 +20,12 @@ export function AnimatedHeadline({
   const highlightWords = highlight.split(" ");
 
   const word = (text: string, index: number, style?: CSSProperties) => (
-    <span key={index} className="-mb-[0.12em] inline-block overflow-hidden pb-[0.12em] align-bottom">
-      <span
-        className="inline-block animate-word-rise"
-        style={{ animationDelay: `${0.1 + index * STAGGER}s`, ...style }}
-      >
-        {text}
-      </span>
+    <span
+      key={index}
+      className="inline-block animate-word-rise"
+      style={{ animationDelay: `${index * STAGGER}s`, ...style }}
+    >
+      {text}
     </span>
   );
 

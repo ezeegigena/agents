@@ -32,7 +32,6 @@ function ToolBadge({ name, category, color }: { name: string; category: string; 
 
 export function Integrations() {
   const [first, second] = integrations.rows;
-  const allTools = [...first, ...second];
 
   return (
     <section id="integrations" aria-labelledby="integrations-title" className="relative isolate overflow-hidden py-24 md:py-36">
@@ -57,13 +56,13 @@ export function Integrations() {
       <Reveal className="relative mt-16 md:mt-20">
         {/* Screen readers get one plain list; the marquee is decorative motion. */}
         <ul className="sr-only">
-          {allTools.map((tool) => (
+          {[...first, ...second].map((tool) => (
             <li key={tool.name}>
               {tool.name} ({tool.category})
             </li>
           ))}
         </ul>
-        <div aria-hidden className="flex flex-col gap-4 motion-reduce:hidden">
+        <div aria-hidden className="flex flex-col gap-4">
           <Marquee duration={55}>
             {first.map((tool, i) => (
               <ToolBadge key={tool.name} {...tool} color={MONOGRAM_COLORS[i % MONOGRAM_COLORS.length]} />
@@ -75,13 +74,6 @@ export function Integrations() {
             ))}
           </Marquee>
         </div>
-        {/* Reduced motion: a static, wrapped grid instead of the marquee. */}
-        <div aria-hidden className="container-page hidden flex-wrap justify-center gap-3 motion-reduce:flex">
-          {allTools.map((tool, i) => (
-            <ToolBadge key={tool.name} {...tool} color={MONOGRAM_COLORS[i % MONOGRAM_COLORS.length]} />
-          ))}
-        </div>
-
         {/* Hub: everything connects to your agents */}
         <div aria-hidden className="pointer-events-none absolute inset-0 hidden place-items-center md:grid motion-reduce:hidden">
           <div className="relative grid size-24 place-items-center rounded-[1.75rem] bg-ink-950/80 shadow-[0_0_0_10px_rgba(6,8,20,0.9),0_0_80px_10px_rgba(157,107,255,0.45)] backdrop-blur">

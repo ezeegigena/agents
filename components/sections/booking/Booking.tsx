@@ -6,7 +6,7 @@ import { GradientText } from "@/components/ui/GradientText";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { BookingFallback } from "./BookingFallback";
-import { CalEmbed } from "./CalEmbed";
+import { LazyCalEmbed } from "./LazyCalEmbed";
 import { PreQualificationForm } from "./PreQualificationForm";
 
 export function Booking() {
@@ -84,7 +84,7 @@ export function Booking() {
                 </span>
               </div>
               <div className={calConfig.enabled ? "relative h-[720px] md:h-[660px]" : "relative h-[540px] md:h-[600px]"}>
-                {calConfig.enabled ? <CalEmbed /> : <BookingFallback />}
+                {calConfig.enabled ? <LazyCalEmbed /> : <BookingFallback />}
               </div>
             </div>
           </Reveal>
