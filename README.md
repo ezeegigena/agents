@@ -115,7 +115,14 @@ lib/                 helpers (format, scroll, gsap, hooks) + 3-statement engine 
 
 ## 6. Performance & accessibility notes
 
-- The hero headline animates with pure CSS from first paint (fast LCP). The three.js scene is code-split, only loads on capable desktops after the browser is idle, and stops rendering when scrolled offscreen. Mobile and low-power devices get a lightweight CSS/SVG version.
+- The hero headline animates with pure CSS from first paint, so it isn't held back by JavaScript.
+- The three.js scene is code-split and only loads on desktops with GPU-backed WebGL2, after the browser is idle. It stops rendering when scrolled offscreen.
+- Mobile, low-power and software-rendered devices get a lightweight CSS/SVG version of the hero visual.
+- The cal.com script and iframe load only when the booking section approaches the viewport.
+- Lighthouse at hand-off, on a local production build:
+  - Desktop: 99–100 performance; 100 accessibility, best practices and SEO.
+  - Mobile (simulated slow 4G with 4× CPU slowdown): about 75–80 performance; 100 accessibility, best practices and SEO.
+  - What limits mobile is the JavaScript needed to hydrate the interactive sections. The next lever would be mounting the heaviest below-the-fold demos on demand.
 - `prefers-reduced-motion` turns off smooth scrolling, parallax, tilt, pinning and scrubbing. Demos show their final state, and Replay still works.
 - Semantic landmarks, skip link, visible focus rings, keyboard-operable slider/tabs/accordion/dialog, real `<table>`s for financial statements, and an `aria-live` tie-out status.
 
