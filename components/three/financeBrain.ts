@@ -301,7 +301,10 @@ export function createFinanceBrain() {
         const behind = depth < -0.35;
         const scale = 0.86 + 0.14 * THREE.MathUtils.clamp((depth + 3.3) / 6.6, 0, 1);
         label.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) translate(-50%, -140%) scale(${scale.toFixed(3)})`;
-        label.style.opacity = behind ? "0" : "1";
+        // Fade labels near the visual's edges (headline on the left, viewport on the right).
+        const u = x / width;
+        const edge = THREE.MathUtils.clamp(Math.min((u - 0.14) / 0.12, (0.92 - u) / 0.08), 0, 1);
+        label.style.opacity = behind ? "0" : edge.toFixed(2);
         label.style.zIndex = behind ? "0" : "2";
       }
     });

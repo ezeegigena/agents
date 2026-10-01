@@ -79,13 +79,16 @@ varying vec3 vViewDir;
 varying float vNoise;
 void main() {
   vec3 n = normalize(vNormal);
-  float fres = pow(1.0 - max(dot(n, normalize(vViewDir)), 0.0), 2.0);
+  float facing = max(dot(n, normalize(vViewDir)), 0.0);
+  float fres = pow(1.0 - facing, 1.7);
   float t = 0.5 + 0.5 * sin(vNoise * 2.6 + uTime * 0.5 + n.y * 2.2);
   vec3 col = mix(uBlue, uViolet, t);
   float tealMix = smoothstep(0.45, 1.0, 0.5 + 0.5 * sin(vNoise * 3.4 - uTime * 0.35 + n.x * 2.6));
   col = mix(col, uTeal, tealMix * 0.6);
   vec3 deep = vec3(0.025, 0.03, 0.08);
-  vec3 color = mix(deep + col * 0.18, col * 1.25, fres);
+  vec3 color = mix(deep + col * 0.24, col * 1.3, fres);
+  // soft inner light so the core reads as glassy rather than flat
+  color += mix(uViolet, uBlue, 0.5) * pow(facing, 4.0) * 0.14;
   color += col * pow(fres, 5.0) * 1.4;
   // faint latitude "data bands" sliding over the surface
   float bands = smoothstep(0.94, 1.0, sin((n.y + vNoise * 0.12) * 46.0 + uTime * 1.2));
