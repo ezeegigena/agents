@@ -11,21 +11,25 @@ import { cn } from "@/lib/cn";
 export function LightPanel({
   id,
   labelledBy,
+  as = "section",
   children,
   className,
 }: {
   id?: string;
   labelledBy?: string;
+  /** Use "div" when the panel wraps several <section>s. */
+  as?: "section" | "div";
   children: ReactNode;
   className?: string;
 }) {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
+  const Component = as === "div" ? motion.div : motion.section;
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start 0.35"] });
   const scale = useTransform(scrollYProgress, [0, 1], [0.94, 1]);
 
   return (
-    <motion.section
+    <Component
       ref={ref}
       id={id}
       aria-labelledby={labelledBy}
@@ -36,6 +40,6 @@ export function LightPanel({
       )}
     >
       {children}
-    </motion.section>
+    </Component>
   );
 }

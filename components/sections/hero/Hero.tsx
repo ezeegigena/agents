@@ -21,7 +21,7 @@ export function Hero() {
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-ink-950" />
       </div>
 
-      <div className="container-page relative grid min-h-[100svh] items-center gap-6 pt-28 pb-12 lg:grid-cols-12 lg:pt-32 lg:pb-20">
+      <div className="container-page relative grid min-h-[100svh] grid-cols-1 items-center gap-6 pt-28 pb-12 lg:grid-cols-12 lg:pt-32 lg:pb-20">
         <div className="relative z-10 lg:col-span-8">
           <p className="glass inline-flex animate-fade-up items-center gap-2.5 rounded-full py-1.5 pr-4 pl-1.5 text-[13px] text-fg-muted">
             <span className="rounded-full bg-brand-gradient px-2 py-0.5 text-[11px] font-semibold text-ink-950">
