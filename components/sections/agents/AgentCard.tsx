@@ -74,7 +74,9 @@ export function AgentCard({
           {/* Accent glow line */}
           <div
             className="absolute inset-x-8 top-0 h-px opacity-70 transition-[opacity,left,right] duration-500 ease-out-expo group-hover/card:inset-x-3 group-hover/card:opacity-100"
-            style={{ background: "linear-gradient(90deg, transparent, var(--accent), transparent)" }}
+            style={{
+              background: "linear-gradient(90deg, transparent, var(--accent), transparent)",
+            }}
           />
           <div
             className="absolute inset-x-10 -top-4 h-8 opacity-25 blur-xl transition-opacity duration-500 group-hover/card:opacity-60"

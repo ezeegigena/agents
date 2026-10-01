@@ -1,8 +1,8 @@
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { reportingContent, type CashStat } from "@/content/reporting";
 import { CountUp } from "@/components/ui/CountUp";
 import { usdShort, usdSigned } from "./format";
-import { rise, showOnView } from "./motion";
+import { rise, useShowOnView } from "./motion";
 
 const { cash } = reportingContent;
 
@@ -19,10 +19,11 @@ function formatterFor(stat: CashStat) {
 
 /** Summary figures under the cash waterfall. */
 export function CashStats() {
-  const reduced = useReducedMotion();
+  const view = useShowOnView();
   return (
     <motion.dl
-      {...showOnView(reduced)}
+      key={view.key}
+      {...view.props}
       className="grid grid-cols-3 gap-2 @md:gap-2.5"
     >
       {cash.stats.map((stat, i) => (

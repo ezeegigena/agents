@@ -6,7 +6,7 @@ import { agents, agentsById, type AgentId } from "@/content/agents";
  * agent is fixed here. Columns are 0–3 (halves center a parent over two
  * children) on a 4-column canvas.
  */
-export const orgColumns: Record<AgentId, number> = {
+const orgColumns: Record<AgentId, number> = {
   cfo: 1.5,
   "head-finance": 0.5,
   "head-accounting": 2.5,
@@ -32,7 +32,7 @@ export const orgCanvas = {
 /** Same formula as `orgNodeWidth`, as CSS (percent of the canvas width). */
 export const nodeWidthCss = `min(${orgCanvas.maxNodeWidth}px, calc(${100 / COLUMNS}% - ${orgCanvas.columnGutter}px))`;
 
-export function orgNodeWidth(width: number) {
+function orgNodeWidth(width: number) {
   return Math.min(orgCanvas.maxNodeWidth, width / COLUMNS - orgCanvas.columnGutter);
 }
 
@@ -45,6 +45,12 @@ export const orgLevels = Object.fromEntries(agents.map((a) => [a.id, levelOf(a.i
   AgentId,
   number
 >;
+
+/** Deepest level in the chart (0 = top). */
+export const orgDepth = Math.max(...Object.values(orgLevels));
+
+/** How strongly a node / edge is drawn while another agent is hovered. */
+export type Emphasis = "on" | "off" | "idle";
 
 /** Fraction (0–1) of the canvas width where a node's center sits. */
 export const columnFraction = (id: AgentId) => (orgColumns[id] + 0.5) / COLUMNS;

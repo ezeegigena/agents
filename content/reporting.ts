@@ -301,7 +301,7 @@ export const reportingContent = {
 
   delivery: {
     title: "Scheduled delivery",
-    body: "Pick the cadence and the channel once. Every report lands on time, already checked against your books.",
+    body: "Set the cadence and channel once. Reports arrive on schedule, tied out to your books.",
     frequencies: [
       { label: "Daily", detail: "KPI dashboard · weekdays at 7:00 AM" },
       { label: "Weekly", detail: "P&L summary · Mondays at 8:00 AM" },

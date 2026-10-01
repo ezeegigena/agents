@@ -1,9 +1,9 @@
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { formatUsd } from "@/lib/format";
 import { reportingContent, type CashStep } from "@/content/reporting";
 import { usdShort, usdSigned } from "./format";
 import { barPath, scaleLinear } from "./geometry";
-import { fade, growY, showOnView } from "./motion";
+import { fade, growY, useShowOnView } from "./motion";
 import { chartColors } from "./palette";
 import { SrTable } from "./SrTable";
 import { useElementWidth } from "./useElementWidth";
@@ -37,9 +37,9 @@ function colorFor(bar: Bar) {
 
 /** Cash bridge: opening → operating → investing → financing → ending. */
 export function CashWaterfall() {
-  const reduced = useReducedMotion();
+  const view = useShowOnView();
   const [ref, width] = useElementWidth<HTMLDivElement>(560);
-  const height = width < 440 ? 236 : 256;
+  const height = width < 440 ? 236 : 272;
   const m = { top: 22, right: 6, bottom: 40, left: 46 };
   const plotW = width - m.left - m.right;
   const plotH = height - m.top - m.bottom;
@@ -58,7 +58,8 @@ export function CashWaterfall() {
         height={height}
         viewBox={`0 0 ${width} ${height}`}
         className="block max-w-full overflow-visible"
-        {...showOnView(reduced)}
+        key={view.key}
+        {...view.props}
       >
         {TICKS.map((t) => (
           <g key={t}>

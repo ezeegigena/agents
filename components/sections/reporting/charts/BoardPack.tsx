@@ -1,8 +1,8 @@
-import { motion, useReducedMotion, type Variants } from "motion/react";
+import { motion, type Variants } from "motion/react";
 import { Check, FileText } from "lucide-react";
 import { reportingContent } from "@/content/reporting";
 import { formatKpiValue } from "./format";
-import { pop, rise, showOnView } from "./motion";
+import { pop, rise, useShowOnView } from "./motion";
 import { chartColors } from "./palette";
 
 const { board, kpi } = reportingContent;
@@ -26,17 +26,21 @@ const page: Variants = {
 
 /** Board pack: page thumbnails fanning out + a table of contents ticking in. */
 export function BoardPack() {
-  const reduced = useReducedMotion();
+  const view = useShowOnView();
   return (
-    <motion.div {...showOnView(reduced)} className="grid items-center gap-6 @lg:grid-cols-[1.05fr_1fr] @lg:gap-6 @2xl:gap-10">
-      <div aria-hidden className="relative mx-auto h-[13.5rem] w-full max-w-[22rem] @lg:h-[18rem]">
+    <motion.div
+      key={view.key}
+      {...view.props}
+      className="grid items-center gap-6 @lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] @2xl:gap-10"
+    >
+      <div aria-hidden className="relative mx-auto h-[12rem] w-full max-w-[22rem] @lg:h-[18rem]">
         {board.pages.map((name, i) => (
           <motion.div
             key={name}
             variants={page}
             custom={i}
             whileHover={{ y: -10, transition: { type: "spring", stiffness: 300, damping: 22 } }}
-            className="absolute top-1/2 left-1/2 -mt-[4.75rem] -ml-[3.5rem] h-[9.5rem] w-[7rem] origin-bottom @2xl:-mt-[5.75rem] @2xl:-ml-[4.25rem] @2xl:h-[11.5rem] @2xl:w-[8.5rem]"
+            className="absolute top-1/2 left-1/2 -mt-[4.25rem] -ml-[3.25rem] h-[8.5rem] w-[6.5rem] origin-bottom @lg:-mt-[4.75rem] @lg:-ml-[3.5rem] @lg:h-[9.5rem] @lg:w-[7rem] @2xl:-mt-[5.75rem] @2xl:-ml-[4.25rem] @2xl:h-[11.5rem] @2xl:w-[8.5rem]"
             style={{ zIndex: FAN.length - i }}
           >
             <Thumbnail index={i} />
@@ -52,7 +56,7 @@ export function BoardPack() {
               key={item.title}
               variants={rise}
               custom={2 + i}
-              className="flex items-center gap-3 py-2"
+              className="flex items-center gap-3 py-1.5 @lg:py-2"
             >
               <motion.span
                 variants={pop}
@@ -69,11 +73,11 @@ export function BoardPack() {
         <motion.div
           variants={rise}
           custom={9}
-          className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl border border-line bg-white/[0.025] px-3 py-2.5"
+          className="mt-3 flex items-center gap-3 rounded-xl border border-line bg-white/[0.025] px-3 py-2.5"
         >
-          <FileText aria-hidden className="size-4 text-fg-muted" />
-          <span className="min-w-0 flex-1 text-xs text-fg-muted">{board.status}</span>
-          <span className="inline-flex items-center gap-1 rounded-full border border-success/30 bg-success/10 px-2 py-0.5 text-[11px] font-medium text-success">
+          <FileText aria-hidden className="size-4 shrink-0 text-fg-muted" />
+          <span className="min-w-0 flex-1 truncate text-xs text-fg-muted">{board.status}</span>
+          <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-success/30 bg-success/10 px-2 py-0.5 text-[11px] font-medium whitespace-nowrap text-success">
             <Check aria-hidden className="size-3" strokeWidth={3} />
             {board.ready}
           </span>

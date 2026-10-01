@@ -1,10 +1,10 @@
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { formatUsd } from "@/lib/format";
 import { reportingContent, type BudgetLine } from "@/content/reporting";
 import { usdShort } from "./format";
-import { fade, growX, pop, showOnView } from "./motion";
+import { fade, growX, pop, useShowOnView } from "./motion";
 import { chartColors } from "./palette";
 import { SrTable } from "./SrTable";
 
@@ -17,14 +17,14 @@ const variance = (line: Pick<BudgetLine, "budget" | "actual">) =>
 
 /** Bullet bars by department: actual bar vs budget marker + variance chip. */
 export function BudgetBars() {
-  const reduced = useReducedMotion();
+  const view = useShowOnView();
   const totals = budget.departments.reduce(
     (acc, d) => ({ budget: acc.budget + d.budget, actual: acc.actual + d.actual }),
     { budget: 0, actual: 0 },
   );
 
   return (
-    <motion.div {...showOnView(reduced)}>
+    <motion.div key={view.key} {...view.props}>
       <ul className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-fg-muted">
         <li className="flex items-center gap-1.5">
           <span aria-hidden className="h-2.5 w-3.5 rounded-[3px]" style={{ backgroundColor: chartColors.teal }} />

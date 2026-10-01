@@ -1,4 +1,5 @@
 import type { ComponentType } from "react";
+import { motion } from "motion/react";
 import { CalendarClock, Sparkles } from "lucide-react";
 import { reportingContent, type Report, type ReportId } from "@/content/reporting";
 import { BoardPack } from "./charts/BoardPack";
@@ -8,17 +9,19 @@ import { CashStats } from "./charts/CashStats";
 import { KpiGrid } from "./charts/KpiGrid";
 import { PnlChart } from "./charts/PnlChart";
 import { StatTile } from "./charts/StatTile";
+import { useShowOnView } from "./charts/motion";
 
 const { window: win, pnl } = reportingContent;
 
 function PnlReport() {
+  const view = useShowOnView();
   return (
     <div className="space-y-5">
-      <div className="grid grid-cols-3 gap-2 @md:gap-2.5">
+      <motion.div key={view.key} {...view.props} className="grid grid-cols-3 gap-2 @md:gap-2.5">
         {pnl.tiles.map((tile, i) => (
           <StatTile key={tile.label} kpi={tile} comparison={pnl.comparison} index={i} />
         ))}
-      </div>
+      </motion.div>
       <PnlChart />
     </div>
   );
@@ -52,7 +55,7 @@ export function ReportPanel({ report }: { report: Report }) {
           <p className="mt-0.5 font-mono text-[11px] text-fg-muted">{report.period}</p>
         </div>
         <div className="flex flex-wrap gap-1.5">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-white/[0.03] px-2.5 py-1 text-[11px] text-fg-muted">
+          <span className="hidden items-center gap-1.5 rounded-full border border-line bg-white/[0.03] px-2.5 py-1 text-[11px] text-fg-muted sm:inline-flex">
             <Sparkles aria-hidden className="size-3.5 text-brand-teal" />
             {win.generatedLabel} · {win.generatedAt}
           </span>

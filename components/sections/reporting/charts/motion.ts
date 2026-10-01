@@ -1,11 +1,11 @@
 import type { Variants } from "motion/react";
+import { usePrefersReducedMotion } from "@/lib/hooks/useMediaQuery";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 /**
- * Shared "draw on show" variants. A chart root uses
- * `initial={reduced ? "show" : "hidden"} whileInView="show"` and children
- * pick a variant; `custom` is the child's stagger index.
+ * Shared "draw on show" variants. A chart root spreads `useShowOnView()`
+ * props and children pick a variant; `custom` is the child's stagger index.
  */
 export const draw: Variants = {
   hidden: { pathLength: 0, opacity: 0 },
@@ -71,11 +71,19 @@ export const pop: Variants = {
   }),
 };
 
-/** Props for a chart root that plays its variants once when scrolled into view. */
-export function showOnView(reduced: boolean | null) {
+/**
+ * Props for a chart root that plays its variants once when scrolled into view.
+ * Reduced motion renders the final state. The preference resolves after
+ * hydration (SSR-safe), so `key` remounts the root once when it flips.
+ */
+export function useShowOnView() {
+  const reduced = usePrefersReducedMotion();
   return {
-    initial: reduced ? "show" : "hidden",
-    whileInView: "show",
-    viewport: { once: true, amount: 0.3 },
+    key: reduced ? "static" : "animated",
+    props: {
+      initial: reduced ? "show" : "hidden",
+      whileInView: "show",
+      viewport: { once: true, amount: 0.3 },
+    },
   } as const;
 }

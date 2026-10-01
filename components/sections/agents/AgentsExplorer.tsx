@@ -1,9 +1,10 @@
 "use client";
 
-import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, LayoutGroup, motion } from "motion/react";
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { siteConfig } from "@/config/site";
 import { agentsSection, type AgentId } from "@/content/agents";
+import { usePrefersReducedMotion } from "@/lib/hooks/useMediaQuery";
 import { scrollToHash, setScrollLocked } from "@/lib/scroll";
 import { AgentDialog, type DialogState } from "./AgentDialog";
 import { OrgChart } from "./OrgChart";
@@ -16,7 +17,7 @@ import { EASE_OUT_EXPO, type AgentsView, type OpenAgent } from "./shared";
  * dialog that both open. `heading` is the server-rendered SectionHeading.
  */
 export function AgentsExplorer({ heading }: { heading: ReactNode }) {
-  const reduced = useReducedMotion() ?? false;
+  const reduced = usePrefersReducedMotion();
   const [view, setView] = useState<AgentsView>("team");
   const [dialog, setDialog] = useState<DialogState | null>(null);
   const triggerRef = useRef<HTMLElement | null>(null);

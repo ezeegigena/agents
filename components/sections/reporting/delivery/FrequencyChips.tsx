@@ -1,8 +1,9 @@
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import { reportingContent } from "@/content/reporting";
 import { useInViewport } from "@/lib/hooks/useInView";
+import { usePrefersReducedMotion } from "@/lib/hooks/useMediaQuery";
 
 const { frequencies } = reportingContent.delivery;
 const STEP_MS = 2400;
@@ -11,7 +12,7 @@ const STEP_MS = 2400;
 export function FrequencyChips() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInViewport(ref);
-  const reduced = useReducedMotion();
+  const reduced = usePrefersReducedMotion();
   const [active, setActive] = useState(1);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ export function FrequencyChips() {
 
   return (
     <div ref={ref}>
-      <ul className="flex gap-1.5 rounded-full border border-line bg-white/[0.025] p-1">
+      <ul className="flex max-w-md gap-1.5 rounded-full border border-line bg-white/[0.025] p-1 xl:max-w-none">
         {frequencies.map((f, i) => (
           <li
             key={f.label}

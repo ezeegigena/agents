@@ -1,7 +1,7 @@
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { cn } from "@/lib/cn";
 import { monotonePath, type Point } from "./geometry";
-import { pop, reveal, showOnView } from "./motion";
+import { pop, reveal, useShowOnView } from "./motion";
 import { chartColors } from "./palette";
 
 const W = 100;
@@ -12,7 +12,7 @@ const H = 32;
  * accent. Decorative (the tile's delta carries the meaning).
  */
 export function Sparkline({ values, className }: { values: number[]; className?: string }) {
-  const reduced = useReducedMotion();
+  const view = useShowOnView();
   const min = Math.min(...values);
   const max = Math.max(...values);
   const pad = (max - min) * 0.15 || 1;
@@ -23,7 +23,7 @@ export function Sparkline({ values, className }: { values: number[]; className?:
   const [endX, endY] = points[points.length - 1];
 
   return (
-    <motion.div aria-hidden className={cn("relative h-8", className)} {...showOnView(reduced)}>
+    <motion.div aria-hidden className={cn("relative h-8", className)} key={view.key} {...view.props}>
       <motion.svg
         viewBox={`0 0 ${W} ${H}`}
         preserveAspectRatio="none"

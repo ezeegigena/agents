@@ -1,11 +1,11 @@
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { useId, useState, type KeyboardEvent, type PointerEvent } from "react";
 import { cn } from "@/lib/cn";
 import { formatUsd } from "@/lib/format";
 import { reportingContent } from "@/content/reporting";
 import { usdShort } from "./format";
 import { bandPath, monotonePath, scaleLinear, type Point } from "./geometry";
-import { draw, fade, pop, showOnView } from "./motion";
+import { draw, fade, pop, useShowOnView } from "./motion";
 import { chartColors } from "./palette";
 import { SrTable } from "./SrTable";
 import { useElementWidth } from "./useElementWidth";
@@ -25,13 +25,13 @@ const series = [
  * Crosshair + tooltip on hover, and on focus with the arrow keys.
  */
 export function PnlChart() {
-  const reduced = useReducedMotion();
+  const view = useShowOnView();
   const [ref, width] = useElementWidth<HTMLDivElement>(560);
   const [active, setActive] = useState<number | null>(null);
   const summaryId = useId();
 
   const narrow = width < 440;
-  const height = narrow ? 190 : 220;
+  const height = narrow ? 190 : 248;
   const m = { top: 12, right: narrow ? 50 : 58, bottom: 24, left: 42 };
   const plotW = width - m.left - m.right;
   const plotH = height - m.top - m.bottom;
@@ -95,7 +95,8 @@ export function PnlChart() {
           height={height}
           viewBox={`0 0 ${width} ${height}`}
           className="block max-w-full overflow-visible"
-          {...showOnView(reduced)}
+          key={view.key}
+          {...view.props}
         >
           {TICKS.map((t) => (
             <g key={t}>

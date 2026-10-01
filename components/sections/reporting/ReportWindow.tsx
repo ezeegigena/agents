@@ -5,12 +5,12 @@ import {
   animate,
   motion,
   useMotionValue,
-  useReducedMotion,
   type AnimationPlaybackControls,
 } from "motion/react";
 import { useEffect, useRef, useState, type FocusEvent } from "react";
 import { reportingContent } from "@/content/reporting";
 import { useInViewport } from "@/lib/hooks/useInView";
+import { usePrefersReducedMotion } from "@/lib/hooks/useMediaQuery";
 import { ReportPanel } from "./ReportPanel";
 import { ReportTabs, panelId, tabId } from "./ReportTabs";
 
@@ -25,7 +25,7 @@ const CYCLE = 5;
 export function ReportWindow() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInViewport(ref);
-  const reduced = useReducedMotion();
+  const reduced = usePrefersReducedMotion();
   const [active, setActive] = useState(0);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
@@ -81,9 +81,9 @@ export function ReportWindow() {
       className="glass-strong relative overflow-hidden rounded-[1.75rem]"
     >
       <TitleBar />
-      <div className="grid grid-cols-[minmax(0,1fr)] md:grid-cols-[14.25rem_minmax(0,1fr)]">
+      <div className="grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[14.25rem_minmax(0,1fr)]">
         <ReportTabs active={active} onSelect={select} progress={progress} showProgress={autoplay} />
-        <div className="@container relative grid min-h-[34rem] p-4 sm:p-6 md:min-h-[33rem]">
+        <div className="@container relative grid min-h-[38.5rem] p-4 sm:min-h-[35rem] sm:p-6 lg:min-h-[36rem]">
           <AnimatePresence initial={false}>
             <motion.div
               key={report.id}

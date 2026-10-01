@@ -9,7 +9,7 @@ export const tabId = (id: string) => `report-tab-${id}`;
 export const panelId = (id: string) => `report-panel-${id}`;
 
 /**
- * Report list: a vertical sidebar from `md`, a horizontally scrolling tab row
+ * Report list: a vertical sidebar from `lg`, a horizontally scrolling tab row
  * below it. Arrow keys / Home / End move between reports (automatic activation).
  */
 export function ReportTabs({
@@ -50,8 +50,8 @@ export function ReportTabs({
   }
 
   return (
-    <div className="border-b border-line md:border-r md:border-b-0">
-      <p className="eyebrow hidden px-5 pt-5 pb-3 text-[10.5px] text-fg-muted md:block">
+    <div className="min-w-0 border-b border-line lg:border-r lg:border-b-0">
+      <p className="eyebrow hidden px-5 pt-5 pb-3 text-[10.5px] text-fg-muted lg:block">
         {win.sidebarLabel}
       </p>
       <div
@@ -59,7 +59,7 @@ export function ReportTabs({
         role="tablist"
         aria-label={win.tablistLabel}
         onKeyDown={onKeyDown}
-        className="relative flex snap-x gap-1.5 overflow-x-auto px-3 py-3 [scrollbar-width:none] md:flex-col md:gap-1 md:overflow-visible md:px-3 md:pt-0 md:pb-4 [&::-webkit-scrollbar]:hidden"
+        className="relative flex snap-x gap-1.5 overflow-x-auto px-3 py-3 [scrollbar-width:none] lg:flex-col lg:gap-1 lg:overflow-visible lg:pt-0 lg:pb-4 [&::-webkit-scrollbar]:hidden"
       >
         {reports.map((report, i) => {
           const selected = i === active;
@@ -75,7 +75,7 @@ export function ReportTabs({
               tabIndex={selected ? 0 : -1}
               onClick={() => onSelect(i)}
               className={cn(
-                "group relative flex min-h-11 shrink-0 snap-start items-center gap-2.5 overflow-hidden rounded-xl border px-3 py-2 text-left transition-colors duration-200 md:w-full md:py-2.5",
+                "group relative flex min-h-11 shrink-0 snap-start items-center gap-2.5 overflow-hidden rounded-xl border px-3 py-2 text-left transition-colors duration-200 lg:w-full lg:py-2.5",
                 selected
                   ? "border-line-strong bg-white/[0.07] text-fg"
                   : "border-transparent text-fg-muted hover:bg-white/[0.035] hover:text-fg",
@@ -93,7 +93,7 @@ export function ReportTabs({
               </span>
               <span className="min-w-0">
                 <span className="block text-[13px] font-medium whitespace-nowrap">{report.name}</span>
-                <span className="hidden font-mono text-[10.5px] whitespace-nowrap text-fg-muted md:block">
+                <span className="hidden font-mono text-[10.5px] whitespace-nowrap text-fg-muted lg:block">
                   {report.cadence} · {report.schedule}
                 </span>
               </span>
